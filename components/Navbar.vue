@@ -39,6 +39,10 @@ export default {
           name: "Gallery 100%",
           url: "/gallery-100"
         },
+        {
+          name: "Gallery 0%",
+          url: "/gallery-0"
+        },
       ]
     }
   },
