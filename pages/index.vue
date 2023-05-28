@@ -1,13 +1,6 @@
 <template>
-  <div
-    class="h-screen bg-fixed bg-center bg-cover custom-img"
-  >
-  <Navbar />
   <main>
-    <div
-      class="relative pt-16 pb-32 flex content-center items-center justify-center"
-      style="min-height: 75vh"
-    >
+    <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 75vh">
       <section class="relative block py-24 bg-green-900">
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
@@ -26,19 +19,5 @@
       </section>
     </div>
   </main>
-  </div>
 </template>
-<script>
-import Navbar from "./components/Navbar.vue";
 
-export default {
-  components: {
-    Navbar,
-  },
-};
-</script>
-<style scoped>
-.custom-img {
-  background-image: url("https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1955&q=80");
-}
-</style>
