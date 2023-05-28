@@ -37,7 +37,7 @@ export default {
       links: [
         {
           name: "Gallery 100%",
-          url: "/gallery-original-100"
+          url: "/gallery-100"
         },
       ]
     }
