@@ -8,6 +8,12 @@
                 >
                     Gazelle
                 </NuxtLink>
+                <select
+                    v-model="selectedCount"
+                    class="mx-5 p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                    <option v-for="el in [1, 5, 25, 50]" :key="el" :value="el">{{ el }}</option>
+                </select>
                 <button
                     class="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                     type="button"
@@ -21,7 +27,11 @@
                     <template v-for="level in levels" :key="level">
                         <ul class="flex flex-col list-none py-3">
                             <li class="nav-item">
-                                <font-awesome-icon v-if="level === 'safe'" class="text-blue-600" :icon="['fas', 'eye']" />
+                                <font-awesome-icon
+                                    v-if="level === 'safe'"
+                                    class="text-blue-600"
+                                    :icon="['fas', 'eye']"
+                                />
                                 <font-awesome-icon v-else class="text-red-600" :icon="['fas', 'eye-slash']" />
                                 <template v-for="size in sizes" :key="size.key">
                                     <NuxtLink
@@ -55,11 +65,35 @@ export default {
             showMenu: false,
             sizes: ["small", "medium", "large", "large2x", "original"],
             levels: ["safe", "unsafe"],
-            count: 25,
+            selectedCount: 25,
         }
     },
+    computed: {
+        count() {
+            return this.selectedCount
+        },
+    },
+    watch: {
+        selectedCount(newCount) {
+            this.navigateToGallery()
+        },
+    },
     methods: {
-        toggleNavbar: function () {
+        navigateToGallery() {
+            const currentQuery = { ...this.$route.query }
+            currentQuery.count = this.selectedCount.toString()
+
+            if (!currentQuery.size || !currentQuery.level)
+            {
+                return;
+            }
+            
+            this.$router.push({
+                name: "gallery",
+                query: currentQuery,
+            })
+        },
+        toggleNavbar() {
             this.showMenu = !this.showMenu
         },
     },
