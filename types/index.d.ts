@@ -1,9 +1,11 @@
 export { ImgApiSource, ImgSource }
 
 declare global {
-    type ImgSource = "original" | "small" | "medium" | "large" | "large2x"
+    type ImgSource = "micro"| "original" | "small" | "medium" | "large" | "large2x"
     interface ImgApiSource {
-        src: ImgSource
+        src: {
+            [key in ImgSource]: string
+        }
         alt: string
         width: number
         height: number

@@ -63,7 +63,7 @@ export default {
     data() {
         return {
             showMenu: false,
-            sizes: ["small", "medium", "large", "large2x", "original"],
+            sizes: ["micro", "small", "medium", "large", "large2x", "original"],
             levels: ["safe", "unsafe"],
             selectedCount: 25,
         }
