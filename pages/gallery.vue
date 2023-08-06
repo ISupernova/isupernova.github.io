@@ -1,9 +1,17 @@
 <template>
     <div class="bg-white m-10">
-        <h1 class="text-6xl font-normal leading-normal mt-0 mb-2 text-pink-800">
-            Gallery <span class="text-green-500">{{ links.length }}</span>
-        </h1>
-        <Gallery :links="links" :is-hidden="!isSafe" :size="size" />
+        <div class="flex">
+            <h1 class="text-6xl font-normal leading-normal mt-0 mb-2 text-pink-800">
+                Gallery <span class="text-green-500">{{ links.length }}</span>
+            </h1>
+            <button
+                class="mx-8 my-8 px-4 border border-gray-400 rounded shadow"
+                @click="isOverlay = !isOverlay"
+            >
+                Overlay
+            </button>
+        </div>
+        <Gallery :links="links" :is-hidden="!isSafe && !isOverlay || isOverlay && isSafe" :size="size" />
     </div>
 </template>
 <script lang="ts">
@@ -15,6 +23,11 @@ export default {
     name: "GalleryPage",
     components: {
         Gallery,
+    },
+    data() {
+        return {
+            isOverlay: false
+        }
     },
     computed: {
         level() {
