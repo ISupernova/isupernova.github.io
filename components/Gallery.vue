@@ -17,10 +17,13 @@
                     loading="lazy"
                     :width="getWidth"
                     :height="getHeight"
+                    @load="onImageLoad"
                 />
                 <div class="absolute inset-0 p-8 text-pink-300 flex flex-col z-50">
                     <div class="relative text-ellipsis overflow-hidden">
                         <h1 class="text-lg font-bold mb-3">{{ image.alt }}</h1>
+                        <p class="text-sm">w/h {{ imageWidth }}x{{ imageHeight }}</p>
+                        <p class="text-sm">natural w/h {{ naturalWidth }}x{{ naturalHeight }}</p>
                     </div>
                 </div>
             </div>
@@ -52,6 +55,14 @@ export default {
             default: "original",
         },
     },
+    data() {
+        return {
+            imageWidth: 0,
+            imageHeight: 0,
+            naturalWidth: 0,
+            naturalHeight: 0,
+        }
+    },
     computed: {
         getWidth() {
             if (this.isNatural) {
@@ -72,6 +83,20 @@ export default {
                 return image.src.original + "?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=34&w=34"
             }
             return image.src[this.size]
+        },
+        onImageLoad(event: Event) {
+            const imageElement = event.target as HTMLImageElement
+            this.imageWidth = imageElement.width
+            this.imageHeight = imageElement.height
+            this.naturalWidth = imageElement.naturalWidth
+            this.naturalHeight = imageElement.naturalHeight
+        },
+        simulateImageLoad() {
+            console.log("simulateImageLoad ", this.$refs.imageRef)
+            const imageElement = this.$refs.imageRef as HTMLImageElement
+            if (imageElement) {
+                this.onImageLoad({ target: imageElement } as unknown as Event)
+            }
         },
     },
 }
