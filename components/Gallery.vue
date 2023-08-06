@@ -1,22 +1,22 @@
 <template>
     <main>
-        <div class="columns-2 md:columns-3 lg:columns-4">
+        <div class="flex flex-wrap">
             <div
                 v-for="image in links"
                 :key="image.alt"
-                class="before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
+                class="w-1/4 p-2 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
                 :class="{
                     overlay: isHidden,
                     'relative mb-4  before:content-[``] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20': true,
                 }"
             >
                 <img
-                    class="w-full rounded-md"
+                    class="rounded-md"
                     :src="getImageSrc(image)"
                     :alt="image.alt"
                     loading="lazy"
-                    :width="image.width"
-                    :height="image.height"
+                    :width="getWidth"
+                    :height="getHeight"
                 />
                 <div class="absolute inset-0 p-8 text-pink-300 flex flex-col z-50">
                     <div class="relative text-ellipsis overflow-hidden">
@@ -41,19 +41,38 @@ export default {
             type: Boolean,
             default: false,
         },
+        isNatural: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
         size: {
             required: false,
             type: String as () => ImgSource,
             default: "original",
         },
     },
+    computed: {
+        getWidth() {
+            if (this.isNatural) {
+                return ""
+            }
+            return "1000"
+        },
+        getHeight() {
+            if (this.isNatural) {
+                return ""
+            }
+            return "1000"
+        },
+    },
     methods: {
-      getImageSrc(image: ImgApiSource): string {
-        if (this.size === "micro") {
-          return image.src.original + "?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=34&w=34";
-        }
-        return image.src[this.size];
-      },
+        getImageSrc(image: ImgApiSource): string {
+            if (this.size === "micro") {
+                return image.src.original + "?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=34&w=34"
+            }
+            return image.src[this.size]
+        },
     },
 }
 </script>

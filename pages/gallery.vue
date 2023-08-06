@@ -5,13 +5,27 @@
                 Gallery <span class="text-green-500">{{ links.length }}</span>
             </h1>
             <button
-                class="mx-8 my-8 px-4 border border-gray-400 rounded shadow"
+                class="ml-4 my-8 px-4 border border-gray-400 rounded shadow"
+                :class="{
+                    'bg-blue-500 text-white': isOverlay,
+                    'bg-white text-blue-500': !isOverlay,
+                }"
                 @click="isOverlay = !isOverlay"
             >
                 Overlay
             </button>
+            <button
+                class="ml-4 my-8 px-4 border border-gray-400 rounded shadow"
+                :class="{
+                    'bg-blue-500 text-white': isNatural,
+                    'bg-white text-blue-500': !isNatural,
+                }"
+                @click="isNatural = !isNatural"
+            >
+                Naturalize
+            </button>
         </div>
-        <Gallery :links="links" :is-hidden="!isSafe && !isOverlay || isOverlay && isSafe" :size="size" />
+        <Gallery :links="links" :is-hidden="!isSafe && !isOverlay || isOverlay && isSafe" :size="size" :is-natural="isNatural"/>
     </div>
 </template>
 <script lang="ts">
@@ -26,7 +40,8 @@ export default {
     },
     data() {
         return {
-            isOverlay: false
+            isOverlay: false,
+            isNatural: true,
         }
     },
     computed: {
