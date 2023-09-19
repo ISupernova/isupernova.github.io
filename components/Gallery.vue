@@ -4,8 +4,9 @@
             <div
                 v-for="image in links"
                 :key="image.alt"
-                class="w-1/4 p-2 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
+                class="p-2 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20"
                 :class="{
+                    'w-1/4': !isNatural, 
                     overlay: isHidden,
                     'relative mb-4  before:content-[``] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20': true,
                 }"
