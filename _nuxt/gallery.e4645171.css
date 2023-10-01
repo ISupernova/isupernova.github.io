@@ -1,0 +1,1 @@
+.overlay{position:relative}.overlay:before{background:hsla(0,0%,100%,.98);content:"";height:90%;left:5%;position:absolute;top:5%;width:90%}.highlighter{background:rgba(0,255,0,.25);border:1px dashed #fff;position:absolute;z-index:1}
