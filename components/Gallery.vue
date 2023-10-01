@@ -21,7 +21,15 @@
                     :height="getHeight"
                     @load="onImageLoad"
                 />
-                <div class="absolute right-0 top-0 p-2 text-green-600 cursor-pointer z-51">
+                <div class="absolute right-0 top-0 p-2 text-blue-600 cursor-pointer z-51">
+                    <font-awesome-icon
+                        :icon="['fas', 'link']"
+                        size="lg"
+                        :border="true"
+                        @click="handleLinkClick(index)"
+                    />
+                </div>
+                <div class="absolute right-10 top-0 p-2 text-green-600 cursor-pointer z-51">
                     <font-awesome-icon
                         :icon="['fas', 'eye']"
                         size="lg"
@@ -133,6 +141,10 @@ export default {
             } else {
                 console.error("Image element is not an instance of HTMLImageElement.")
             }
+        },
+        handleLinkClick(index: number) {
+            const image = this.links[index]
+            window.open(image.src.original, "_blank")
         },
     },
 }
