@@ -25,13 +25,14 @@
                 Naturalize
             </button>
         </div>
-        <Gallery :links="links" :is-hidden="!isSafe && !isOverlay || isOverlay && isSafe" :size="size" :is-natural="isNatural"/>
+        <Gallery :links="links" :is-hidden="!isSafe && !isOverlay || isOverlay && isSafe" :size="size" :is-natural="isNatural" />
     </div>
 </template>
 <script lang="ts">
 import Gallery from "~/components/Gallery.vue"
 import unsafeImagesData from "~/assets/gallery-unsafe.json"
 import safeImagesData from "~/assets/gallery-safe.json"
+import { loadModelAsync } from "~/helpers/tfjs"
 
 export default {
     name: "GalleryPage",
@@ -61,6 +62,9 @@ export default {
             const data = this.level === "safe" ? safeImagesData : unsafeImagesData as unknown as Array<ImgApiSource>
             return data.slice(0, this.count) as Array<ImgApiSource>
         },
+    },
+    async mounted() {
+        await loadModelAsync()
     },
 }
 </script>
