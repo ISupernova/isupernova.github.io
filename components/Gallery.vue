@@ -78,6 +78,7 @@ export default {
     data() {
         return {
             itemRefs: [] as any[],
+            highLightedImages: [] as any[],
             imageWidth: 0,
             imageHeight: 0,
             naturalWidth: 0,
@@ -120,6 +121,13 @@ export default {
         async handleModelClick(index: number) {
             // Access the image element using this.$refs
             const img = this.itemRefs[index] as unknown
+            if (this.highLightedImages.includes(img)) {
+                Array.from(document.getElementsByClassName("highlighter")).forEach((element: Element) => {
+                    element.remove(); 
+                });
+                this.highLightedImages = this.highLightedImages.filter(item => item !== img);
+                return;
+            }
             if (img instanceof HTMLImageElement) {
                 const result = await classifyAsync(img)
                 for (const prediction of result) {
@@ -135,6 +143,7 @@ export default {
                     }
                     this.$forceUpdate();
                 }
+                this.highLightedImages.push(img);
                 console.log("prediction: ", result)
                 console.log("boxes: ", result.map((p: Prediction) => p.boxes))
                 console.log("position: ", result.map((p: Prediction) => p.position))
