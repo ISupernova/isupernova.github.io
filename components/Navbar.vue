@@ -15,6 +15,16 @@
                     <option v-for="el in [1, 5, 25, 50]" :key="el" :value="el">{{ el }}</option>
                 </select>
                 <button
+                    class="text-white cursor-pointer px-3 py-1 border border-solid border-transparent rounded bg-transparent outline-none focus:outline-none"
+                    type="button"
+                    @click="warmUpModel()"
+                >
+                    <font-awesome-icon  v-if="isModelLoaded" :icon="['fas', 'fire']" /> <font-awesome-icon v-if="!isModelLoaded" :icon="['fas', 'circle-nodes']" />
+                    <template v-if="isLoadingModel">
+                        Loading model <font-awesome-icon class="text-white cursor-pointer px-3 py-1 border border-solid border-transparent rounded bg-transparent outline-none focus:outline-none" :icon="['fas', 'spinner']" spin />
+                    </template>
+                </button>
+                <button
                     class="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                     type="button"
                     @click="toggleNavbar()"
@@ -41,6 +51,7 @@
                                                 level: level,
                                                 size: size,
                                                 count: count,
+                                                isOverlay: level === 'unsafe',
                                             },
                                         }"
                                         class="px-3 py-2 text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
@@ -58,10 +69,14 @@
 </template>
 
 <script>
+import { loadModelAsync } from "~/helpers/tfjs"
+
 export default {
     name: "Navbar",
     data() {
         return {
+            isLoadingModel: false,
+            isModelLoaded: false,
             showMenu: false,
             sizes: ["micro", "small", "medium", "large", "large2x", "original"],
             levels: ["safe", "unsafe"],
@@ -96,6 +111,12 @@ export default {
         toggleNavbar() {
             this.showMenu = !this.showMenu
         },
+        async warmUpModel() {
+            this.isLoadingModel = true
+            await loadModelAsync()
+            this.isLoadingModel = false
+            this.isModelLoaded = true
+        }
     },
 }
 </script>
